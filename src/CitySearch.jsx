@@ -5,7 +5,7 @@ class CitySearch extends Component {
 		super(props);
 		this.state = {
       CityName: 'SPRINGFIELD',
-      Zipcodes: ''
+      Zipcodes: []
 		};
 		this.searchCityName = this.searchCityName.bind(this);
 		this.handleChange = this.handleChange.bind(this);
@@ -14,9 +14,11 @@ class CitySearch extends Component {
 		this.searchCityName();
 	}
 	searchCityName(event) {
+		let city = this.state.CityName;
+		city = city.toUpperCase();
 		if (event != null) event.preventDefault();
 		axios
-			.get(`http://ctp-zip-api.herokuapp.com/city/${this.state.CityName}`)
+			.get(`http://ctp-zip-api.herokuapp.com/city/${city}`)
 			.then((response) => {
 				this.setState({
 					Zipcodes: response.data  + ','
@@ -28,6 +30,7 @@ class CitySearch extends Component {
 			});
 	}
 	handleChange(event) {
+		let city = event.target.value;
 		this.setState({ CityName: event.target.value });
 	}
 	render() {
